@@ -6,23 +6,76 @@ function Gamebox(){
     useEffect(()=>{
         fetchData();
     },[]);
-
+    
     //wordlist state
-    const [wordlist,setWords]=useState([]);
+    const [WORD,setWord]=useState('');
     const [life,setLife]=useState(5);
     
+    //fetch wordlists
     async function fetchData(){
         const URL='http://localhost:3000/wordlist.json';
         const response=await fetch(URL);
         const data=await response.json();
-        setWords(data);
+        setWord(data[parseInt(Math.random()*2314)]);        
     }
 
-    const getRandomWord=()=>wordlist[parseInt(Math.random()*2314)];
 
-    const word=getRandomWord();
+    //why is the function running 4 times?????
+    //need to disable inputs after user inputs also
+    function disableBoxRow(nodes){
+        nodes.forEach(node=>{
+            node.setAttribute('contentEditable','false');
+            node.classList.remove('text-cursor');
+            node.classList.add('locked-cursor');
+        })
+    }
+
+    //check correct letters
+    const checkCorrectLetters=(rowData)=>{
+        let resultsObject=[];
+        let resultsIndex=[1,1,1,1,1];
+        rowData.forEach((data,id)=>{
+            if(data===WORD[id]){
+                resultsObject.push({letter:WORD[id],position:id});
+                resultsIndex[id]=0;
+            }
+        })
+        return checkMisplacedLetters(rowData,resultsObject,resultsIndex);
+    };
     
-    //main logic
+    //check wrong letters
+    const checkMisplacedLetters=(dataRow,matchedInfo,resultsIndex)=>{
+        let cachedWord=WORD;
+        matchedInfo.forEach(data=>{
+            cachedWord=cachedWord.replace(data.letter,'#');
+        });
+
+        dataRow.forEach((data,id)=>{
+            if(cachedWord.includes(data)){
+                resultsIndex[id]=2;
+                cachedWord=cachedWord.replace(data,'#');
+            }
+        })
+        return resultsIndex;
+    };
+
+    //function to check correct and wrong values
+    function checkInputs(rowData,nodeData){
+        let results=checkCorrectLetters(rowData);
+        disableBoxRow(nodeData);
+        console.log(results);
+        nodeData.forEach((node,id)=>{
+            if(results[id]===0){
+                node.classList.add('background-green');
+            }
+            else if(results[id]===2){
+                node.classList.add('background-yellow');
+            }
+        })
+    }
+
+    
+    const WORD_LENGTH=5;
     const lifeOne=document.querySelectorAll('.box0');
     const lifeTwo=document.querySelectorAll('.box1');
     const lifeThree=document.querySelectorAll('.box2');
@@ -45,7 +98,7 @@ function Gamebox(){
             if(id===(array.length-1)){
                 box.addEventListener('input',(e)=>{
                     handler.push(e.data);
-                    console.log(lifeData);
+                    checkInputs(handler,data);
                 })
             }
             else{
@@ -56,14 +109,11 @@ function Gamebox(){
         })
     });
 
-
-    
-
     //game gives 5 lives
     return (
         <div className='game-box'>
-            <h2 className=''>The word is {word}</h2>
-            <h2 className='mb-5'>You only have 5 lives</h2>
+            <h2 className=''>The word is {WORD}</h2>
+            <h2 className='mb-5'>You only have {WORD_LENGTH} lives</h2>
             <Boxes lives='5'/>
 
         </div>

@@ -24,11 +24,26 @@ code {
   max-height:4rem;
   min-width:4rem;
   background-color:white;
-  cursor:text;
   color:black;
   overflow:hidden;
   font-size:2.6rem;
   text-transform:uppercase;
   text-align:center;
   border:3px solid purple;
+}
+
+.text-cursor{
+  cursor:text;
+}
+
+.locked-cursor{
+  cursor:not-allowed;
+}
+
+.background-green{
+  background-color:green;
+}
+
+.background-yellow{
+  background-color:yellow;
 }
