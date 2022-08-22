@@ -61,9 +61,8 @@ function Gamebox(){
 
     //function to check correct and wrong values
     function checkInputs(rowData,nodeData){
-        let results=checkCorrectLetters(rowData);
         disableBoxRow(nodeData);
-        console.log(results);
+        let results=checkCorrectLetters(rowData);
         nodeData.forEach((node,id)=>{
             if(results[id]===0){
                 node.classList.add('background-green');
@@ -72,6 +71,14 @@ function Gamebox(){
                 node.classList.add('background-yellow');
             }
         })
+        let winstatus=369;//for fun
+        results.forEach(num=>winstatus+=num)
+        if(winstatus===369){
+            setLife(1000)
+        }
+        else{
+            setLife(life-1);
+        }
     }
 
     
@@ -114,8 +121,8 @@ function Gamebox(){
         <div className='game-box'>
             <h2 className=''>The word is {WORD}</h2>
             <h2 className='mb-5'>You only have {WORD_LENGTH} lives</h2>
-            <Boxes lives='5'/>
-
+            {(life===0)?<h3>Dead!</h3>:(life===1000)?<h3>You Win!</h3>:<Boxes lives='5'/>}
+            
         </div>
     );
 }
