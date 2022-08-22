@@ -30,6 +30,16 @@ function Gamebox(){
         })
     }
 
+    //function to not consider backspace
+    function monitor(data){
+        if(data===null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     //check correct letters
     const checkCorrectLetters=(rowData)=>{
         let resultsObject=[];
@@ -103,13 +113,15 @@ function Gamebox(){
         data.forEach((box,id,array)=>{
             if(id===(array.length-1)){
                 box.addEventListener('input',(e)=>{
-                    handler.push(e.data);
+                    monitor(data)&&handler.push(e.data);
                     checkInputs(handler,data);
+                    lifeMatrix[mid+1][0].focus();
                 })
             }
             else{
                 box.addEventListener('input',(e)=>{
-                    handler.push(e.data);
+                    monitor(data)&&handler.push(e.data);
+                    data[id+1].focus();
                 })      
             }
         })
@@ -118,12 +130,16 @@ function Gamebox(){
     //game gives 5 lives
     return (
         <div className='game-box'>
-            <h2 className=''>The word is {WORD}</h2>
-            <h2 className='mb-5'>You only have {life} lives</h2>
-            {(life===0)?<h3>Dead!</h3>:(life===1000)?<h3>You Win!</h3>:<Boxes lives='5'/>}
+            {/* <h2 className=''>The word is {WORD}</h2> */}
+            {/* <h2 className='mb-5'>You only have {life} lives</h2> */}
+            {(life===0)?<h3>Dead!</h3>:(life===1000)?<h3>You Win!</h3>:<> <h2 className='mb-5'>You only have {life} lives</h2><Boxes lives='5'/></>}
             
         </div>
     );
 }
+
+//todo
+//backend NodeJS
+//beter finish screens
 
 export default Gamebox;
