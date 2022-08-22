@@ -82,7 +82,6 @@ function Gamebox(){
     }
 
     
-    const WORD_LENGTH=5;
     const lifeOne=document.querySelectorAll('.box0');
     const lifeTwo=document.querySelectorAll('.box1');
     const lifeThree=document.querySelectorAll('.box2');
@@ -120,7 +119,7 @@ function Gamebox(){
     return (
         <div className='game-box'>
             <h2 className=''>The word is {WORD}</h2>
-            <h2 className='mb-5'>You only have {WORD_LENGTH} lives</h2>
+            <h2 className='mb-5'>You only have {life} lives</h2>
             {(life===0)?<h3>Dead!</h3>:(life===1000)?<h3>You Win!</h3>:<Boxes lives='5'/>}
             
         </div>
