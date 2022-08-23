@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react'
 import Boxes from './Boxes'
+import Defeat from './resultScreens/Defeat'
+import Win from './resultScreens/Win'
 
 function Gamebox(){
 
@@ -13,7 +15,7 @@ function Gamebox(){
     
     //fetch wordlists
     async function fetchData(){
-        const URL='http://localhost:3000/wordlist.json';
+        const URL='http://localhost:3030/data';
         const response=await fetch(URL);
         const data=await response.json();
         setWord(data[parseInt(Math.random()*2314)]);        
@@ -71,6 +73,7 @@ function Gamebox(){
 
     //function to check correct and wrong values
     function checkInputs(rowData,nodeData){
+        console.log(WORD)//remove this
         disableBoxRow(nodeData);
         let results=checkCorrectLetters(rowData);
         nodeData.forEach((node,id)=>{
@@ -132,7 +135,8 @@ function Gamebox(){
         <div className='game-box'>
             {/* <h2 className=''>The word is {WORD}</h2> */}
             {/* <h2 className='mb-5'>You only have {life} lives</h2> */}
-            {(life===0)?<h3>Dead!</h3>:(life===1000)?<h3>You Win!</h3>:<> <h2 className='mb-5'>You only have {life} lives</h2><Boxes lives='5'/></>}
+            {/* {(life===0)?<h3>Dead! Word was {WORD}</h3>:(life===1000)?<h3>You Win!</h3>:<> <h2 className='mb-5'>You only have {life} lives</h2><Boxes lives='5'/></>} */}
+            {(life===0)?<Defeat word={WORD}/>:(life===1000)?<Win/>:<> <h2 className='mb-5'>You only have {life} lives</h2><Boxes lives='5'/></>}
             
         </div>
     );

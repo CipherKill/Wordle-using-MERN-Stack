@@ -1,3 +1,4 @@
+@import 'https://fonts.googleapis.com/css?family=Sofia';
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -46,4 +47,19 @@ code {
 
 .background-yellow{
   background-color:yellow;
+}
+
+.scary{
+  font-family:Sofia;
+}
+
+.answer-box{
+  background-color:rgba(242, 0, 255, 0.3);
+  border-radius: 10px;
+  display:inline-block;
+}
+
+.win-style{
+  color:rgb(0, 255, 0);
+  font-size:5rem;
 }
