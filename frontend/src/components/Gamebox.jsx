@@ -104,6 +104,9 @@ function Gamebox(){
     const lifeMatrix=[lifeOne,lifeTwo,lifeThree,lifeFour,lifeFive];
     const lifeData={one:[],two:[],three:[],four:[],five:[]}
 
+    //focus on first element
+    lifeOne[0]&&lifeOne[0].focus()
+
     //for the event listeners
     lifeMatrix.forEach((data,mid)=>{
         let handler;
